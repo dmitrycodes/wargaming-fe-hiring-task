@@ -37,3 +37,7 @@ export function toApiError(err: unknown, fallbackErrorKind: ApiErrorKind) {
 
   return new ApiError(fallbackErrorKind, err.message, { cause: err });
 }
+
+export function isRetryable(error: ApiError) {
+  return error.kind === 'network';
+}
