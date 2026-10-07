@@ -23,7 +23,7 @@ function isApiResponse(res: unknown): res is ApiResponse {
   return false;
 }
 
-interface FetchApiOptions {
+export interface FetchApiOptions {
   signal?: AbortSignal;
   timeoutMs?: number;
 }
@@ -48,7 +48,7 @@ async function fetchOrThrow(url: string, signal: AbortSignal) {
 export async function fetchApi(
   url: string,
   options?: FetchApiOptions,
-): Promise<ApiResponse> {
+): Promise<OkApiResponse> {
   const { signal, timeoutMs = DEFAULT_TIMEOUT_MS } = options ?? {};
 
   const timeoutSignal = AbortSignal.timeout(timeoutMs);
