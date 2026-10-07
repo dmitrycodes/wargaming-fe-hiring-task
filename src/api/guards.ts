@@ -14,3 +14,12 @@ export function isStringRecord(
     })
   );
 }
+
+export function isStringArray(value: unknown): value is string[] {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => {
+      return typeof item === 'string';
+    })
+  );
+}
