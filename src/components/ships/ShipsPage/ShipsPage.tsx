@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useCatalog } from '../../../hooks/useCatalog';
 import { Page } from '../../layout/Page';
 import { normalize } from '../../../api/normalize';
-import { LoadingState } from '../LoadingState';
+import { ShipsCatalog } from '../ShipsCatalog';
 import { ErrorState } from '../ErrorState';
 
 export function ShipsPage() {
@@ -15,13 +15,14 @@ export function ShipsPage() {
 
     return normalize(data);
   }, [data]);
+  console.log('data', data);
 
-  const isLoading = status === 'pending' || true;
+  const isLoading = status === 'pending';
   const isError = status === 'error';
 
   return (
     <Page>
-      {isLoading && <LoadingState />}
+      <ShipsCatalog isLoading={isLoading} ships={normalizedCatalog?.ships} />
       {isError && <ErrorState />}
     </Page>
   );

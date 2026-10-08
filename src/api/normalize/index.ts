@@ -20,6 +20,7 @@ export function normalize(catalog: RawCatalog): NormalizedCatalog {
   const { ships, skipped } = normalizeShips(
     catalog.vehicles,
     nations,
+    shipClasses,
     mediaPath,
   );
 

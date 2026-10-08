@@ -18,6 +18,7 @@ export interface Ship {
   id: string;
   key: string;
   classKey: ShipClassKey;
+  class: ShipClass | undefined;
   category: ShipCategory;
   nationKey: string;
   nation: Nation | undefined;

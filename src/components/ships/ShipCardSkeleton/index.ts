@@ -1,0 +1,1 @@
+export { ShipCardSkeleton } from './ShipCardSkeleton';

@@ -1,0 +1,1 @@
+export { ShipsCatalog } from './ShipsCatalog';

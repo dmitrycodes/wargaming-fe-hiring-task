@@ -9,7 +9,7 @@ export function normalizeNations(
   const nations: Nation[] = [];
   for (const nation of rawNations) {
     nations.push({
-      imageUrl: getMediaUrl(nation.icons.small, mediaPath),
+      imageUrl: getMediaUrl(nation.icons.default, mediaPath),
       key: nation.name,
       fullNames: nation.localization.mark,
     });

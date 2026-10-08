@@ -8,7 +8,7 @@ export interface RawNation {
     mark: Record<string, string>;
   };
   icons: {
-    small: string;
+    default: string;
   };
 }
 
@@ -19,7 +19,7 @@ function isNation(value: unknown): value is RawNation {
     isPlainObject(value.localization) &&
     isStringRecord(value.localization.mark) &&
     isPlainObject(value.icons) &&
-    typeof value.icons.small === 'string'
+    typeof value.icons.default === 'string'
   );
 }
 

@@ -1,0 +1,1 @@
+export { ShipClassInfo } from './ShipClassInfo';
