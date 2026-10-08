@@ -44,4 +44,10 @@
   --font-body: 'Roboto Condensed';
 
   --skip-link-bg: var(--orange-700);
+
+  --card-height: 125px;
+  --card-min-width: 250px;
+  --card-gap: 16px;
+  --card-bg: var(--navy-700);
+  --card-border: var(--steel-600);
 }

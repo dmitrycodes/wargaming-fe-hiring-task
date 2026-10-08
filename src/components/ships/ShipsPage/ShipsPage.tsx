@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useCatalog } from '../../../hooks/useCatalog';
 import { Page } from '../../layout/Page';
 import { normalize } from '../../../api/normalize';
+import { LoadingState } from '../LoadingState';
+import { ErrorState } from '../ErrorState';
 
 export function ShipsPage() {
   const { data, status, refetch } = useCatalog();
@@ -14,11 +16,13 @@ export function ShipsPage() {
     return normalize(data);
   }, [data]);
 
-  console.log(normalizedCatalog);
+  const isLoading = status === 'pending' || true;
+  const isError = status === 'error';
 
   return (
     <Page>
-      <div></div>
+      {isLoading && <LoadingState />}
+      {isError && <ErrorState />}
     </Page>
   );
 }
