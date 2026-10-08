@@ -1,0 +1,23 @@
+@use 'mixins' as *;
+
+.root {
+}
+
+.skipLink {
+  background: var(--skip-link-bg);
+  color: inherit;
+  left: 50%;
+  padding: var(--space-2) var(--space-3);
+  position: absolute;
+  border-radius: var(--radius-1);
+  text-transform: uppercase;
+  transform: translateY(-100%);
+
+  @include motion {
+    transition: transform 0.3s;
+  }
+}
+
+.skipLink:focus {
+  transform: translateY(0%);
+}

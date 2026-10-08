@@ -1,0 +1,10 @@
+.root {
+  background-color: var(--bg-bar);
+  border-bottom: 1px solid var(--border);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+}

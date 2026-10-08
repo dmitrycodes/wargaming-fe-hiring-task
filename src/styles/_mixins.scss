@@ -1,0 +1,23 @@
+$breakpoints: (
+  // 'sm': 576px,
+  'md': 768px,
+  // 'lg': 992px,
+   // 'xl': 1200px
+);
+
+@mixin up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $width: map-get($breakpoints, $breakpoint);
+    @media (min-width: $width) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$breakpoint}. Available breakpoints are: #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin motion() {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}

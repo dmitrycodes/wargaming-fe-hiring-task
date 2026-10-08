@@ -1,0 +1,11 @@
+.root {
+  padding: var(--space-5) 0;
+}
+
+.note {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}

@@ -20,6 +20,7 @@ type CatalogOutcome =
   SuccessCatalogOutcome | PendingCatalogOutcome | ErrorCatalogOutcome;
 
 type UseCatalogResult = CatalogOutcome & {
+  data: RawCatalog | undefined;
   fetching: boolean;
   refetch: () => void;
 };
@@ -77,6 +78,7 @@ export function useCatalog(): UseCatalogResult {
   const { counter, ...cleanState } = state;
 
   return {
+    data: undefined,
     ...cleanState,
     refetch,
     fetching: counter !== refetchCounter || cleanState.status === 'pending', // initially counter and refetchCounter both equal to 0 so pending status is checked

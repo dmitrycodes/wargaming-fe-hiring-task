@@ -1,0 +1,47 @@
+:root {
+  --navy-950: #0e1726;
+  --navy-900: #17212b;
+  --navy-800: #223040;
+  --navy-700: #273240;
+  --navy-600: #2f3b4b;
+  --teal-700: #2f3d41;
+  --teal-600: #395461;
+  --steel-600: #4d5864;
+  --steel-400: #7d8a99;
+  --grey-400: #93979b;
+  --grey-100: #e6ebf0;
+  --orange-600: #aa451c;
+  --orange-700: #b7421f;
+  --gold-400: #f0b84a;
+  --sky-300: #8ec5ff;
+
+  --bg-page: var(--navy-900);
+  --bg-bar: var(--teal-700);
+
+  --border: var(--steel-600);
+
+  --text: var(--grey-100);
+  --text-muted: var(--grey-400);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-1: 2px;
+  --radius-2: 4px;
+
+  --page-max-width: 1440px;
+  --page-gutter: var(--space-4);
+  --header-height: 56px;
+
+  --text-sm: 12px;
+  --text-md: 14px;
+  --text-lg: 18px;
+
+  --font-body: 'Roboto Condensed';
+
+  --skip-link-bg: var(--orange-700);
+}

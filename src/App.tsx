@@ -1,7 +1,12 @@
-import './App.css';
+import { Layout } from './components/layout/Layout';
+import { ShipsPage } from './components/ships/ShipsPage';
 
 function App() {
-  return <></>;
+  return (
+    <Layout>
+      <ShipsPage />
+    </Layout>
+  );
 }
 
 export default App;
