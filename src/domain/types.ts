@@ -1,9 +1,10 @@
+// Order here reflects the sort_order value from the API
 export const shipClassKeys = [
-  'battleship',
-  'cruiser',
-  'destroyer',
-  'air-carrier',
-  'submarine',
+  'Submarine',
+  'Destroyer',
+  'Cruiser',
+  'Battleship',
+  'AirCarrier',
 ] as const;
 export type ShipClassKey = (typeof shipClassKeys)[number];
 
@@ -15,7 +16,7 @@ export type ShipTier = (typeof shipTiers)[number];
 
 export interface Ship {
   id: string;
-  name: string;
+  key: string;
   classKey: ShipClassKey;
   category: ShipCategory;
   nationKey: string;
@@ -27,19 +28,19 @@ export interface Ship {
 }
 
 export interface Nation {
-  name: string;
+  key: string;
   fullNames: Record<string, string>;
   imageUrl: string | undefined;
 }
 
 export interface ShipClass {
-  name: string;
+  key: ShipClassKey;
   sortOrder: number;
   fullNames: Record<string, string>;
   imageUrl: string | undefined;
 }
 
-export type Skipped = Pick<Ship, 'id' | 'name'> & {
+export type Skipped = Pick<Ship, 'id' | 'key'> & {
   reason: 'no-class' | 'invalid-tier';
 };
 

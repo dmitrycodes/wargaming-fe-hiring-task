@@ -23,6 +23,10 @@ export interface RawCatalog {
   mediaPath: SourceResult<string>;
 }
 
+export function getSourceData<T>(sourceResult: SourceResult<T>, fallback: T) {
+  return sourceResult.status === 'ok' ? sourceResult.data : fallback;
+}
+
 function toSourceResult<T>(
   fetchResult: PromiseSettledResult<T>,
 ): SourceResult<T> {

@@ -20,18 +20,8 @@ export function deriveShipCategory(tags: string[]): ShipCategory {
   return 'tech-tree';
 }
 
-const shipClassTags: Record<ShipClassKey, string> = {
-  battleship: 'Battleship',
-  cruiser: 'Cruiser',
-  destroyer: 'Destroyer',
-  'air-carrier': 'AirCarrier',
-  submarine: 'Submarine',
-};
-
 export function deriveShipClassKey(tags: string[]): ShipClassKey | undefined {
-  return shipClassKeys.find((shipClass) =>
-    tags.includes(shipClassTags[shipClass]),
-  );
+  return shipClassKeys.find((shipClassKey) => tags.includes(shipClassKey));
 }
 
 export function deriveShipTier(level: number): ShipTier | undefined {
