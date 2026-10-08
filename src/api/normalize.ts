@@ -1,6 +1,6 @@
 import {
   deriveShipCategory,
-  deriveShipClass,
+  deriveShipClassKey,
   deriveShipTier,
   isShipHidden,
 } from '../domain/ship';
@@ -8,7 +8,7 @@ import type {
   Nation,
   NormalizedCatalog,
   Ship,
-  ShipClassInfo,
+  ShipClass,
   Skipped,
 } from '../domain/types';
 import { getMediaUrl } from '../domain/media';
@@ -30,7 +30,7 @@ export function normalize(catalog: RawCatalog): NormalizedCatalog {
   }
   const nationsByName = new Map(nations.map((nation) => [nation.name, nation]));
 
-  const shipClasses: ShipClassInfo[] = [];
+  const shipClasses: ShipClass[] = [];
   if (catalog.vehicleTypes.status === 'ok') {
     for (const [name, vehicleType] of Object.entries(
       catalog.vehicleTypes.data,
@@ -51,8 +51,8 @@ export function normalize(catalog: RawCatalog): NormalizedCatalog {
       continue;
     }
 
-    const shipClass = deriveShipClass(vehicle.tags);
-    if (!shipClass) {
+    const shipClassKey = deriveShipClassKey(vehicle.tags);
+    if (!shipClassKey) {
       skipped.push({
         id,
         name: vehicle.name,
@@ -76,7 +76,7 @@ export function normalize(catalog: RawCatalog): NormalizedCatalog {
     ships.push({
       id,
       name: vehicle.name,
-      class: shipClass,
+      classKey: shipClassKey,
       category: deriveShipCategory(vehicle.tags),
       nationKey: vehicle.nation,
       nation: nation,

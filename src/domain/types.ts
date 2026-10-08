@@ -1,11 +1,11 @@
-export const shipClasses = [
+export const shipClassKeys = [
   'battleship',
   'cruiser',
   'destroyer',
   'air-carrier',
   'submarine',
 ] as const;
-export type ShipClass = (typeof shipClasses)[number];
+export type ShipClassKey = (typeof shipClassKeys)[number];
 
 export const shipCategories = ['tech-tree', 'premium', 'special'] as const;
 export type ShipCategory = (typeof shipCategories)[number];
@@ -16,7 +16,7 @@ export type ShipTier = (typeof shipTiers)[number];
 export interface Ship {
   id: string;
   name: string;
-  class: ShipClass;
+  classKey: ShipClassKey;
   category: ShipCategory;
   nationKey: string;
   nation: Nation | undefined;
@@ -32,7 +32,7 @@ export interface Nation {
   imageUrl: string | undefined;
 }
 
-export interface ShipClassInfo {
+export interface ShipClass {
   name: string;
   sortOrder: number;
   fullNames: Record<string, string>;
@@ -46,6 +46,6 @@ export type Skipped = Pick<Ship, 'id' | 'name'> & {
 export interface NormalizedCatalog {
   ships: Ship[];
   nations: Nation[];
-  shipClasses: ShipClassInfo[];
+  shipClasses: ShipClass[];
   skipped: Skipped[];
 }

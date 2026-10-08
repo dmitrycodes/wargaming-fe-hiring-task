@@ -1,9 +1,9 @@
 import {
-  shipClasses,
+  shipClassKeys,
   shipTiers,
   type Ship,
   type ShipCategory,
-  type ShipClass,
+  type ShipClassKey,
   type ShipTier,
 } from './types';
 import { getLocalizedText } from './locale';
@@ -20,7 +20,7 @@ export function deriveShipCategory(tags: string[]): ShipCategory {
   return 'tech-tree';
 }
 
-const shipClassTags: Record<ShipClass, string> = {
+const shipClassTags: Record<ShipClassKey, string> = {
   battleship: 'Battleship',
   cruiser: 'Cruiser',
   destroyer: 'Destroyer',
@@ -28,8 +28,8 @@ const shipClassTags: Record<ShipClass, string> = {
   submarine: 'Submarine',
 };
 
-export function deriveShipClass(tags: string[]): ShipClass | undefined {
-  return shipClasses.find((shipClass) =>
+export function deriveShipClassKey(tags: string[]): ShipClassKey | undefined {
+  return shipClassKeys.find((shipClass) =>
     tags.includes(shipClassTags[shipClass]),
   );
 }
