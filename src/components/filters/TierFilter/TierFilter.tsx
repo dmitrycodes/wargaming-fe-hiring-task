@@ -1,6 +1,7 @@
 import { Filter } from '../Filter';
 import { shipTiers, type ShipTier } from '../../../domain/types';
-import { formatTier } from '../../../domain/shipTier';
+import { ShipTierInfo } from '../../ships/ShipTierInfo';
+import styles from './TierFilter.module.scss';
 
 interface TierFilterProps {
   selected: ShipTier[];
@@ -12,7 +13,9 @@ export function TierFilter({ selected, onChange }: TierFilterProps) {
     <Filter
       label="Tier"
       options={shipTiers}
-      formatOption={formatTier}
+      formatOption={(tier) => (
+        <ShipTierInfo className={styles.tier} tier={tier} />
+      )}
       formatOptionLabel={(tier) => `Tier ${tier}`}
       selected={selected}
       onChange={onChange}

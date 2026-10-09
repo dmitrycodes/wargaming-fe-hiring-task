@@ -3,14 +3,15 @@ import type { ShipTier } from '../../../domain/types';
 
 interface ShipTierInfoProps {
   tier: ShipTier;
+  className?: string;
 }
 
-export function ShipTierInfo({ tier }: ShipTierInfoProps) {
+export function ShipTierInfo({ tier, className }: ShipTierInfoProps) {
   const label = `Tier ${tier}`;
 
   return (
-    <div aria-label={label} title={label}>
+    <span className={className} title={label} aria-label={label}>
       {formatTier(tier)}
-    </div>
+    </span>
   );
 }
