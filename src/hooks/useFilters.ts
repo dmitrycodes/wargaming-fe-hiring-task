@@ -1,16 +1,33 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  emptyFilters,
+  emptyFacetFilters,
   filterUrlParams,
   parseFilters,
   serializeFilters,
+  type FacetFilters,
   type Filters,
 } from '../domain/filters';
+import { useDebouncedValue } from './useDebouncedValue';
+
+const DEBOUNCE_DELAY_MS = 300;
 
 export function useFilters() {
-  const [filters, setFilters] = useState(() =>
-    parseFilters(window.location.search),
+  const [initialFilters] = useState(() => parseFilters(window.location.search));
+  const { query, ...initialFacetFilters } = initialFilters;
+
+  const [facetFilters, setFacetFilters] = useState(initialFacetFilters);
+  const [searchQuery, setSearchQuery] = useState(query);
+  const debouncedSearchQuery = useDebouncedValue(
+    searchQuery,
+    DEBOUNCE_DELAY_MS,
   );
+
+  const effectiveFilters: Filters = useMemo(() => {
+    return {
+      ...facetFilters,
+      query: debouncedSearchQuery,
+    };
+  }, [facetFilters, debouncedSearchQuery]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -18,7 +35,7 @@ export function useFilters() {
       params.delete(param);
     }
 
-    const newParams = serializeFilters(filters);
+    const newParams = serializeFilters(effectiveFilters);
     for (const [key, value] of newParams) {
       params.append(key, value);
     }
@@ -28,11 +45,11 @@ export function useFilters() {
     if (window.location.href !== newUrl.href) {
       history.replaceState(null, '', newUrl);
     }
-  }, [filters]);
+  }, [effectiveFilters]);
 
   const setFilter = useCallback(
-    <T extends keyof Filters>(group: T, values: Filters[T]) => {
-      setFilters((prev) => {
+    <T extends keyof FacetFilters>(group: T, values: FacetFilters[T]) => {
+      setFacetFilters((prev) => {
         return {
           ...prev,
           [group]: values,
@@ -43,12 +60,15 @@ export function useFilters() {
   );
 
   const reset = useCallback(() => {
-    setFilters(emptyFilters);
+    setFacetFilters(emptyFacetFilters);
+    setSearchQuery('');
   }, []);
 
   return {
-    filters,
+    filters: effectiveFilters,
     setFilter,
     reset,
+    searchQuery,
+    setSearchQuery,
   };
 }

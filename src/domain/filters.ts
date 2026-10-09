@@ -17,6 +17,8 @@ export interface Filters {
   query: string;
 }
 
+export type FacetFilters = Omit<Filters, 'query'>;
+
 export const filterUrlParams = {
   categories: 'categories',
   tiers: 'tiers',
@@ -25,12 +27,11 @@ export const filterUrlParams = {
   query: 'q',
 } satisfies Record<keyof Filters, string>;
 
-export const emptyFilters: Filters = {
+export const emptyFacetFilters: FacetFilters = {
   categories: [],
   tiers: [],
   classes: [],
   nations: [],
-  query: '',
 };
 
 function matches<T>(selected: T[], value: T): boolean {

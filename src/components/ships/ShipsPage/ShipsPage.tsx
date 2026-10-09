@@ -12,10 +12,13 @@ import { ClassFilter } from '../../filters/ClassFilter';
 import { NationFilter } from '../../filters/NationFilter';
 import { CategoryFilter } from '../../filters/CategoryFilter';
 import { Summary } from '../../filters/Summary';
+import { SearchField } from '../../ui';
+import styles from './ShipsPage.module.scss';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
-  const { filters, setFilter, reset } = useFilters();
+  const { filters, setFilter, reset, searchQuery, setSearchQuery } =
+    useFilters();
 
   const normalizedData = useMemo(() => {
     if (!data) {
@@ -80,7 +83,16 @@ export function ShipsPage() {
         />
       </Filters>
 
-      <Summary total={normalizedData?.ships.length} count={ships?.length} />
+      <Summary total={normalizedData?.ships.length} count={ships?.length}>
+        <SearchField
+          className={styles.searchField}
+          label="Search ships"
+          placeholder="Search ship name"
+          isLabelHidden
+          value={searchQuery}
+          onChange={setSearchQuery}
+        />
+      </Summary>
 
       <ShipsCatalog isLoading={isLoading} ships={ships} />
       {isError && <ErrorState />}
