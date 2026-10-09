@@ -1,0 +1,14 @@
+.root {
+  margin: var(--space-5) 0 var(--space-5);
+}
+
+.text {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--steel-400);
+}
+
+.highlighted {
+  color: var(--grey-100);
+}

@@ -11,6 +11,7 @@ import { applyFilters, hasActiveFilters } from '../../../domain/filters';
 import { ClassFilter } from '../../filters/ClassFilter';
 import { NationFilter } from '../../filters/NationFilter';
 import { CategoryFilter } from '../../filters/CategoryFilter';
+import { Summary } from '../../filters/Summary';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
@@ -78,6 +79,8 @@ export function ShipsPage() {
           }}
         />
       </Filters>
+
+      <Summary total={normalizedData?.ships.length} count={ships?.length} />
 
       <ShipsCatalog isLoading={isLoading} ships={ships} />
       {isError && <ErrorState />}
