@@ -83,7 +83,6 @@
   --ui-search-field-placeholder: var(--text-muted);
   --ui-search-field-border: var(--steel-600);
   --ui-search-field-border-focus: var(--sky-300);
-  --ui-search-field-height: var(44px);
   --ui-search-field-padding: var(--space-3);
   --ui-search-field-text: var(--text-md);
   --ui-search-field-gap: var(--space-2);
