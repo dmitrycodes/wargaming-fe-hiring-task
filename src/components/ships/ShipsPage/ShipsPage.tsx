@@ -6,7 +6,7 @@ import { ShipsCatalog } from '../ShipsCatalog';
 import { ErrorState } from '../ErrorState';
 
 export function ShipsPage() {
-  const { data, status, refetch } = useCatalog();
+  const { data, status } = useCatalog();
 
   const normalizedCatalog = useMemo(() => {
     if (!data) {
