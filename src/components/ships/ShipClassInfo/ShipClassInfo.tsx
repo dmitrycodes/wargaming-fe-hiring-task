@@ -1,28 +1,21 @@
+import { formatShipClassLabel } from '../../../domain/shipClass';
 import type { ShipClass, ShipClassKey } from '../../../domain/types';
 import styles from './ShipClassInfo.module.scss';
-
-const shipClassKeyLabels: Record<ShipClassKey, string> = {
-  Submarine: 'Submarine',
-  Destroyer: 'Destroyer',
-  Cruiser: 'Cruiser',
-  Battleship: 'Battleship',
-  AirCarrier: 'Air Carrier',
-};
 
 interface ShipClassInfoProps {
   shipClassKey: ShipClassKey;
   shipClass: ShipClass | undefined;
 }
 export function ShipClassInfo({ shipClassKey, shipClass }: ShipClassInfoProps) {
-  const label = shipClassKeyLabels[shipClassKey];
+  const label = formatShipClassLabel(shipClassKey);
   return (
     <div aria-label={label}>
-      {shipClass ? (
+      {shipClass?.imageUrl ? (
         <img
           src={shipClass.imageUrl}
           className={styles.image}
           title={label}
-          aria-hidden
+          alt=""
         />
       ) : (
         <span>{label}</span>

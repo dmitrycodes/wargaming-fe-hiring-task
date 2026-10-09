@@ -8,6 +8,7 @@ import { Filters } from '../../filters/Filters';
 import { TierFilter } from '../../filters/TierFilter';
 import { useFilters } from '../../../hooks/useFilters';
 import { applyFilters } from '../../../domain/filters';
+import { ClassFilter } from '../../filters/ClassFilter';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
@@ -40,6 +41,13 @@ export function ShipsPage() {
           onChange={(selectedTiers) => {
             setFilter('tiers', selectedTiers);
           }}
+        />
+        <ClassFilter
+          selected={filters.classes}
+          onChange={(selectedClasses) => {
+            setFilter('classes', selectedClasses);
+          }}
+          shipClasses={normalizedData?.shipClasses}
         />
       </Filters>
 

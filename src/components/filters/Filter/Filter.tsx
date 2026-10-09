@@ -6,8 +6,8 @@ import styles from './Filter.module.scss';
 interface FilterProps<T> {
   label: string;
   options: readonly T[];
-  formatOption: (option: T) => ReactNode;
-  formatOptionLabel: (option: T) => string;
+  formatOption?: (option: T) => ReactNode;
+  formatOptionLabel?: (option: T) => string;
   selected: T[];
   onChange: (values: T[]) => void;
 }
@@ -48,9 +48,11 @@ export function Filter<T extends string | number>({
             key={option}
             id={option}
             className={styles.button}
-            aria-label={formatOptionLabel(option)}
+            aria-label={
+              formatOptionLabel ? formatOptionLabel(option) : option.toString()
+            }
           >
-            {formatOption(option)}
+            {formatOption ? formatOption(option) : option}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
