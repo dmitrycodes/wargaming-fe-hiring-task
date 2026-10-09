@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { getShipFullName } from '../../../domain/ship';
 import type { Ship } from '../../../domain/types';
 import { Card } from '../Card';
@@ -13,7 +14,7 @@ interface ShipProps {
 
 export function ShipCard({ ship }: ShipProps) {
   return (
-    <Card>
+    <Card category={ship.category}>
       {ship.nation && <ShipNation nation={ship.nation} />}
       <div className={styles.content}>
         <div className={styles.inner}>
@@ -34,7 +35,14 @@ export function ShipCard({ ship }: ShipProps) {
             alt=""
           />
 
-          <div className={styles.name}>{getShipFullName(ship, 'en')}</div>
+          <div
+            className={clsx(styles.name, {
+              [styles.nameSpecial]: ship.category === 'special',
+              [styles.namePremium]: ship.category === 'premium',
+            })}
+          >
+            {getShipFullName(ship, 'en')}
+          </div>
         </div>
       </div>
     </Card>

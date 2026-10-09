@@ -4,3 +4,15 @@
   border: 1px solid var(--card-border);
   position: relative;
 }
+
+.techTree {
+  border: 1px solid var(--card-border);
+}
+
+.special {
+  border-color: var(--card-border-special);
+}
+
+.premium {
+  border-color: var(--card-border-premium);
+}

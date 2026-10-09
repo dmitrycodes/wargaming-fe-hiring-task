@@ -52,6 +52,8 @@
   --card-gap: 16px;
   --card-bg: var(--navy-700);
   --card-border: var(--steel-600);
+  --card-border-special: var(--sky-300);
+  --card-border-premium: var(--gold-400);
 
   /* UI */
 
