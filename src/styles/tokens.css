@@ -43,7 +43,7 @@
 
   --font-body: 'Roboto Condensed';
 
-  --ring: var(--sky-300);
+  --ring: var(--gold-400);
 
   --skip-link-bg: var(--orange-700);
 
@@ -56,11 +56,22 @@
   /* UI */
 
   /* Button */
-
   --ui-button-gap: var(--space-1);
   --ui-button-bg-primary: var(--navy-900);
   --ui-button-bg-secondary: var(--navy-700);
   --ui-button-color: var(--grey-100);
   --ui-button-border: var(--steel-600);
   --ui-button-text: var(--text-md);
+
+  /* ToggleButton */
+  --ui-toggle-button-gap: var(--space-1);
+  --ui-toggle-button-bg: var(--navy-900);
+  --ui-toggle-button-bg-selected: var(--navy-700);
+  --ui-toggle-button-color: var(--grey-100);
+  --ui-toggle-button-border: var(--steel-600);
+  --ui-toggle-button-border-selected: var(--sky-300);
+  --ui-toggle-button-text: var(--text-md);
+
+  /* ToggleButtonGroup */
+  --ui-toggle-button-group-gap: var(--space-2);
 }

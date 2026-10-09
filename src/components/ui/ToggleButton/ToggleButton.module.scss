@@ -1,0 +1,44 @@
+.root {
+  --_bg: var(--ui-toggle-button-bg);
+  --_bg-hover: color-mix(in srgb, var(--_bg), white 5%);
+  --_bg-pressed: color-mix(in srgb, var(--_bg), black 5%);
+
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-toggle-button-gap);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  font-size: var(--ui-toggle-button-text);
+  border-color: var(--ui-toggle-button-border);
+  color: var(--ui-toggle-button-color);
+  background-color: var(--_bg);
+}
+
+.root[data-hovered] {
+  background-color: var(--_bg-hover);
+}
+
+.root[data-pressed] {
+  background-color: var(--_bg-pressed);
+}
+
+.root[data-selected] {
+  --_bg: var(--ui-toggle-button-bg-selected);
+
+  border-color: var(--ui-toggle-button-border-selected);
+}
+
+.root[data-focus-visible] {
+  outline: 2px solid var(--ring);
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
