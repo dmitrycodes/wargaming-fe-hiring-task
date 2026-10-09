@@ -9,6 +9,7 @@ import { TierFilter } from '../../filters/TierFilter';
 import { useFilters } from '../../../hooks/useFilters';
 import { applyFilters } from '../../../domain/filters';
 import { ClassFilter } from '../../filters/ClassFilter';
+import { NationFilter } from '../../filters/NationFilter';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
@@ -30,6 +31,16 @@ export function ShipsPage() {
     return applyFilters(normalizedData.ships, filters);
   }, [normalizedData, filters]);
 
+  const nationKeys = useMemo(() => {
+    if (!normalizedData) {
+      return undefined;
+    }
+
+    return Array.from(
+      new Set(normalizedData.ships.map((ship) => ship.nationKey)),
+    );
+  }, [normalizedData]);
+
   const isLoading = status === 'pending';
   const isError = status === 'error';
 
@@ -48,6 +59,14 @@ export function ShipsPage() {
             setFilter('classes', selectedClasses);
           }}
           shipClasses={normalizedData?.shipClasses}
+        />
+        <NationFilter
+          selected={filters.nations}
+          onChange={(selectedNations) => {
+            setFilter('nations', selectedNations);
+          }}
+          nations={normalizedData?.nations}
+          nationKeys={nationKeys}
         />
       </Filters>
 

@@ -10,6 +10,7 @@ export function normalizeNations(
   for (const nation of rawNations) {
     nations.push({
       imageUrl: getMediaUrl(nation.icons.default, mediaPath),
+      iconUrl: getMediaUrl(nation.icons.tiny, mediaPath),
       key: nation.name,
       fullNames: nation.localization.mark,
     });

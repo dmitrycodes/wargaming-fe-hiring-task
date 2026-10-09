@@ -32,6 +32,7 @@ export interface Nation {
   key: string;
   fullNames: Record<string, string>;
   imageUrl: string | undefined;
+  iconUrl: string | undefined;
 }
 
 export interface ShipClass {
