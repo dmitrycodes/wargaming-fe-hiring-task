@@ -1,2 +1,3 @@
-export { ShipsGrid } from './ShipsGrid';
-export { useGridColumns } from './useGridColumns';
+export { ShipsGrid, ShipsGridRow } from './ShipsGrid';
+export { useGridMetrics } from './useGridMetrics';
+export { useScrollMargin } from './useScrollMargin';

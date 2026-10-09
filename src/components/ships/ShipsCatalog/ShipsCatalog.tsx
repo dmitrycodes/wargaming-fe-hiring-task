@@ -1,8 +1,14 @@
+import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import type { Ship } from '../../../domain/types';
 import { VisuallyHidden } from '../../ui/VisuallyHidden';
 import { ShipCard } from '../ShipCard';
 import { ShipCardSkeleton } from '../ShipCardSkeleton';
-import { ShipsGrid, useGridColumns } from '../ShipsGrid';
+import {
+  ShipsGrid,
+  ShipsGridRow,
+  useGridMetrics,
+  useScrollMargin,
+} from '../ShipsGrid';
 
 const LOADING_ROWS = 3;
 
@@ -12,10 +18,28 @@ interface ShipsCatalogProps {
 }
 
 export function ShipsCatalog({ isLoading, ships }: ShipsCatalogProps) {
-  const { ref, columns } = useGridColumns();
+  const { ref, columns, rowHeight } = useGridMetrics();
+  const { scrollMargin } = useScrollMargin(ref);
 
-  const skeletonItems = Array.from(
-    { length: columns * LOADING_ROWS },
+  const rowsCount =
+    ships && columns !== 0 ? Math.ceil(ships.length / columns) : 0;
+
+  console.log('scrollMargin', scrollMargin);
+  const virtualizer = useWindowVirtualizer({
+    count: rowsCount,
+    estimateSize: () => rowHeight,
+    overscan: 3,
+    scrollMargin,
+  });
+  console.log(
+    'virtualizer',
+    virtualizer.getVirtualItems().length,
+    virtualizer.getTotalSize(),
+  );
+
+  const skeletonItems = Array.from({ length: columns }, (_, index) => index);
+  const skeletonRows = Array.from(
+    { length: LOADING_ROWS },
     (_, index) => index,
   );
 
@@ -24,12 +48,40 @@ export function ShipsCatalog({ isLoading, ships }: ShipsCatalogProps) {
       {isLoading && <VisuallyHidden>Loading ships</VisuallyHidden>}
 
       <div aria-busy={isLoading}>
-        <ShipsGrid ref={ref} columns={columns}>
+        <ShipsGrid
+          ref={ref}
+          columns={columns}
+          height={isLoading ? undefined : virtualizer.getTotalSize()}
+        >
           {isLoading &&
-            skeletonItems.map((item) => <ShipCardSkeleton key={item} />)}
+            skeletonRows.map((row) => (
+              <ShipsGridRow key={row} position="static">
+                {skeletonItems.map((item) => (
+                  <ShipCardSkeleton key={item} />
+                ))}
+              </ShipsGridRow>
+            ))}
+
           {!isLoading &&
             ships &&
-            ships.map((ship) => <ShipCard key={ship.id} ship={ship} />)}
+            virtualizer.getVirtualItems().map((virtualRow) => {
+              const rowShips = ships.slice(
+                virtualRow.index * columns,
+                (virtualRow.index + 1) * columns,
+              );
+
+              return (
+                <ShipsGridRow
+                  key={virtualRow.key}
+                  offset={virtualRow.start - scrollMargin}
+                  position="absolute"
+                >
+                  {rowShips.map((ship) => (
+                    <ShipCard key={ship.id} ship={ship} />
+                  ))}
+                </ShipsGridRow>
+              );
+            })}
         </ShipsGrid>
       </div>
     </div>

@@ -11,8 +11,9 @@ function readPropertyPxValue(styles: CSSStyleDeclaration, property: string) {
   return value;
 }
 
-export function useGridColumns() {
-  const [columns, setColumns] = useState<number>(0);
+export function useGridMetrics() {
+  const [columns, setColumns] = useState(0);
+  const [rowHeight, setRowHeight] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
@@ -25,6 +26,7 @@ export function useGridColumns() {
       '--card-min-width',
     );
     const cardGap = readPropertyPxValue(containerStyles, '--card-gap');
+    const cardHeight = readPropertyPxValue(containerStyles, '--card-height');
 
     const observer = new ResizeObserver((entries) => {
       if (entries.length === 0) return;
@@ -33,6 +35,7 @@ export function useGridColumns() {
       const columns = getColumnCount(width, cardMinWidth, cardGap);
 
       setColumns(columns);
+      setRowHeight(cardGap + cardHeight);
     });
 
     observer.observe(currentRef);
@@ -42,5 +45,5 @@ export function useGridColumns() {
     };
   }, []);
 
-  return { ref, columns };
+  return { ref, columns, rowHeight };
 }
