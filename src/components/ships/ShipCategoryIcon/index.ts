@@ -1,0 +1,1 @@
+export { ShipCategoryIcon } from './ShipCategoryIcon';

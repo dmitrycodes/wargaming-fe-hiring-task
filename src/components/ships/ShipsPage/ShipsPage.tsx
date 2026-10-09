@@ -10,6 +10,7 @@ import { useFilters } from '../../../hooks/useFilters';
 import { applyFilters } from '../../../domain/filters';
 import { ClassFilter } from '../../filters/ClassFilter';
 import { NationFilter } from '../../filters/NationFilter';
+import { CategoryFilter } from '../../filters/CategoryFilter';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
@@ -67,6 +68,12 @@ export function ShipsPage() {
           }}
           nations={normalizedData?.nations}
           nationKeys={nationKeys}
+        />
+        <CategoryFilter
+          selected={filters.categories}
+          onChange={(selectedCategories) => {
+            setFilter('categories', selectedCategories);
+          }}
         />
       </Filters>
 

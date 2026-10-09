@@ -1,0 +1,18 @@
+.root {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+}
+
+.techTree {
+  background-color: var(--steel-600);
+}
+
+.premium {
+  background-color: var(--gold-400);
+}
+
+.special {
+  background-color: var(--sky-300);
+}
