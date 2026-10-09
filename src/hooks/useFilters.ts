@@ -4,9 +4,8 @@ import {
   filterUrlParams,
   parseFilters,
   serializeFilters,
-  toggleValue,
+  type Filters,
 } from '../domain/filters';
-import type { ShipCategory, ShipClassKey, ShipTier } from '../domain/types';
 
 export function useFilters() {
   const [filters, setFilters] = useState(() =>
@@ -31,41 +30,17 @@ export function useFilters() {
     }
   }, [filters]);
 
-  const toggleCategoryFilter = useCallback((category: ShipCategory) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        categories: toggleValue(prev.categories, category),
-      };
-    });
-  }, []);
-
-  const toggleTierFilter = useCallback((tier: ShipTier) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        tiers: toggleValue(prev.tiers, tier),
-      };
-    });
-  }, []);
-
-  const toggleClassFilter = useCallback((classKey: ShipClassKey) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        classes: toggleValue(prev.classes, classKey),
-      };
-    });
-  }, []);
-
-  const toggleNationFilter = useCallback((nation: string) => {
-    setFilters((prev) => {
-      return {
-        ...prev,
-        nations: toggleValue(prev.nations, nation),
-      };
-    });
-  }, []);
+  const setFilter = useCallback(
+    <T extends keyof Filters>(group: T, values: Filters[T]) => {
+      setFilters((prev) => {
+        return {
+          ...prev,
+          [group]: values,
+        };
+      });
+    },
+    [],
+  );
 
   const reset = useCallback(() => {
     setFilters(emptyFilters);
@@ -73,10 +48,7 @@ export function useFilters() {
 
   return {
     filters,
-    toggleCategoryFilter,
-    toggleTierFilter,
-    toggleClassFilter,
-    toggleNationFilter,
+    setFilter,
     reset,
   };
 }

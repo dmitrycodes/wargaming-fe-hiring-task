@@ -78,7 +78,7 @@ export function serializeFilters(filters: Filters): URLSearchParams {
   return params;
 }
 
-function isOneOf<T extends string | number>(
+export function isOneOf<T extends string | number>(
   list: readonly T[],
   value: string | number,
 ): value is T {
@@ -113,10 +113,4 @@ export function parseFilters(search: string): Filters {
     classes: [...new Set(classes)],
     nations: [...new Set(nations)],
   };
-}
-
-export function toggleValue<T>(values: T[], value: T): T[] {
-  return values.includes(value)
-    ? values.filter((item) => item !== value)
-    : [...values, value];
 }

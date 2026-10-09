@@ -1,0 +1,13 @@
+.root {
+  margin-bottom: var(--space-6);
+}
+
+.content {
+  display: flex;
+  background-color: var(--navy-700);
+  border: 1px solid var(--steel-600);
+
+  & > div:not(:last-child) {
+    border-right: 1px solid var(--steel-600);
+  }
+}

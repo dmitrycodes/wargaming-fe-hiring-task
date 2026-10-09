@@ -4,25 +4,46 @@ import { Page } from '../../layout/Page';
 import { normalize } from '../../../api/normalize';
 import { ShipsCatalog } from '../ShipsCatalog';
 import { ErrorState } from '../ErrorState';
+import { Filters } from '../../filters/Filters';
+import { TierFilter } from '../../filters/TierFilter';
+import { useFilters } from '../../../hooks/useFilters';
+import { applyFilters } from '../../../domain/filters';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
+  const { filters, setFilter } = useFilters();
 
-  const normalizedCatalog = useMemo(() => {
+  const normalizedData = useMemo(() => {
     if (!data) {
       return undefined;
     }
 
     return normalize(data);
   }, [data]);
-  console.log('data', data);
+
+  const ships = useMemo(() => {
+    if (!normalizedData) {
+      return undefined;
+    }
+
+    return applyFilters(normalizedData.ships, filters);
+  }, [normalizedData, filters]);
 
   const isLoading = status === 'pending';
   const isError = status === 'error';
 
   return (
     <Page>
-      <ShipsCatalog isLoading={isLoading} ships={normalizedCatalog?.ships} />
+      <Filters>
+        <TierFilter
+          selected={filters.tiers}
+          onChange={(selectedTiers) => {
+            setFilter('tiers', selectedTiers);
+          }}
+        />
+      </Filters>
+
+      <ShipsCatalog isLoading={isLoading} ships={ships} />
       {isError && <ErrorState />}
     </Page>
   );
