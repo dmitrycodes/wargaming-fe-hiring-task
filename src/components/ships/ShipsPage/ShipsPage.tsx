@@ -7,14 +7,14 @@ import { ErrorState } from '../ErrorState';
 import { Filters } from '../../filters/Filters';
 import { TierFilter } from '../../filters/TierFilter';
 import { useFilters } from '../../../hooks/useFilters';
-import { applyFilters } from '../../../domain/filters';
+import { applyFilters, hasActiveFilters } from '../../../domain/filters';
 import { ClassFilter } from '../../filters/ClassFilter';
 import { NationFilter } from '../../filters/NationFilter';
 import { CategoryFilter } from '../../filters/CategoryFilter';
 
 export function ShipsPage() {
   const { data, status } = useCatalog();
-  const { filters, setFilter } = useFilters();
+  const { filters, setFilter, reset } = useFilters();
 
   const normalizedData = useMemo(() => {
     if (!data) {
@@ -42,12 +42,14 @@ export function ShipsPage() {
     );
   }, [normalizedData]);
 
+  const hasFilters = hasActiveFilters(filters);
+
   const isLoading = status === 'pending';
   const isError = status === 'error';
 
   return (
     <Page>
-      <Filters>
+      <Filters reset={reset} hasActiveFilters={hasFilters}>
         <TierFilter
           selected={filters.tiers}
           onChange={(selectedTiers) => {
