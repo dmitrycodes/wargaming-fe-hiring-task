@@ -5,8 +5,9 @@ import {
   type ShipClassKey,
 } from '../../../domain/types';
 import { formatShipClassLabel } from '../../../domain/shipClass';
-import { useMemo } from 'react';
-import styles from './ClassFilter.module.scss';
+import { FallbackImage } from '../../ui';
+
+const IMAGE_SIZE = 26;
 
 interface ClassFilterProps {
   selected: ShipClassKey[];
@@ -19,31 +20,23 @@ export function ClassFilter({
   onChange,
   shipClasses,
 }: ClassFilterProps) {
-  const shipClassesByKey = useMemo(() => {
-    if (!shipClasses) {
-      return undefined;
-    }
-
-    return new Map(shipClasses.map((shipClass) => [shipClass.key, shipClass]));
-  }, [shipClasses]);
-
   return (
     <Filter
       label="Type"
       options={shipClassKeys}
       formatOption={(classKey) => {
-        const shipClass = shipClassesByKey?.get(classKey);
+        const shipClass = shipClasses?.find((item) => item.key === classKey);
         const label = formatShipClassLabel(classKey);
 
-        return shipClass?.imageUrl ? (
-          <img
-            src={shipClass.imageUrl}
-            className={styles.image}
+        return (
+          <FallbackImage
+            src={shipClass?.imageUrl}
             title={label}
-            alt=""
+            width={IMAGE_SIZE}
+            height={IMAGE_SIZE}
+            fallback={<span>{label}</span>}
+            alt={label}
           />
-        ) : (
-          <span>{label}</span>
         );
       }}
       formatOptionLabel={formatShipClassLabel}

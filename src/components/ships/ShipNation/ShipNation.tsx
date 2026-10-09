@@ -10,9 +10,9 @@ export function ShipNation({ nation }: ShipNationProps) {
   const label = `Nation: ${getNationFullName(nation, 'en')}`;
 
   return (
-    <div className={styles.root} aria-label={label}>
+    <div className={styles.root}>
       <div className={styles.flag}>
-        <img src={nation?.imageUrl} alt="" />
+        <img src={nation?.imageUrl} alt={label} />
       </div>
     </div>
   );

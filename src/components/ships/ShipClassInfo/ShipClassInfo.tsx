@@ -1,6 +1,8 @@
 import { formatShipClassLabel } from '../../../domain/shipClass';
 import type { ShipClass, ShipClassKey } from '../../../domain/types';
-import styles from './ShipClassInfo.module.scss';
+import { FallbackImage } from '../../ui';
+
+const IMAGE_SIZE = 26;
 
 interface ShipClassInfoProps {
   shipClassKey: ShipClassKey;
@@ -9,17 +11,15 @@ interface ShipClassInfoProps {
 export function ShipClassInfo({ shipClassKey, shipClass }: ShipClassInfoProps) {
   const label = formatShipClassLabel(shipClassKey);
   return (
-    <div aria-label={label}>
-      {shipClass?.imageUrl ? (
-        <img
-          src={shipClass.imageUrl}
-          className={styles.image}
-          title={label}
-          alt=""
-        />
-      ) : (
-        <span>{label}</span>
-      )}
+    <div>
+      <FallbackImage
+        src={shipClass?.imageUrl}
+        title={label}
+        width={IMAGE_SIZE}
+        height={IMAGE_SIZE}
+        fallback={<span>{label}</span>}
+        alt={label}
+      />
     </div>
   );
 }
