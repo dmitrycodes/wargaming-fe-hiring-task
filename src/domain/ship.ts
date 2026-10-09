@@ -7,6 +7,7 @@ import {
   type ShipTier,
 } from './types';
 import { getLocalizedText } from './locale';
+import { normalizeSearchString } from './search';
 
 export function deriveShipCategory(tags: string[]): ShipCategory {
   if (tags.includes('uiPremium')) {
@@ -44,4 +45,18 @@ export function getShipShortName(
   locale: string,
 ): string | undefined {
   return getLocalizedText(ship.shortNames, locale);
+}
+
+export function deriveShipSearchString(
+  shortTranslations: Record<string, string>,
+  fullTranslations: Record<string, string>,
+) {
+  const searchString = [
+    getLocalizedText(shortTranslations, 'en'),
+    getLocalizedText(fullTranslations, 'en'),
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return normalizeSearchString(searchString);
 }

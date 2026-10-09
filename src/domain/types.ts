@@ -26,6 +26,7 @@ export interface Ship {
   fullNames: Record<string, string>;
   shortNames: Record<string, string>;
   imageUrl: string | undefined;
+  searchString: string;
 }
 
 export interface Nation {

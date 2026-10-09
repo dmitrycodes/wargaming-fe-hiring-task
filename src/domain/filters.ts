@@ -1,3 +1,4 @@
+import { getSearchTerms } from './search';
 import {
   shipCategories,
   shipClassKeys,
@@ -13,6 +14,7 @@ export interface Filters {
   tiers: ShipTier[];
   classes: ShipClassKey[];
   nations: string[];
+  query: string;
 }
 
 export const filterUrlParams = {
@@ -20,6 +22,7 @@ export const filterUrlParams = {
   tiers: 'tiers',
   classes: 'classes',
   nations: 'nations',
+  query: 'q',
 } satisfies Record<keyof Filters, string>;
 
 export const emptyFilters: Filters = {
@@ -27,10 +30,15 @@ export const emptyFilters: Filters = {
   tiers: [],
   classes: [],
   nations: [],
+  query: '',
 };
 
 function matches<T>(selected: T[], value: T): boolean {
   return selected.length === 0 || selected.includes(value);
+}
+
+function matchesSearchTerms(terms: string[], searchString: string): boolean {
+  return terms.every((term) => searchString.includes(term));
 }
 
 export function applyFilters(ships: Ship[], filters: Filters): Ship[] {
@@ -38,18 +46,26 @@ export function applyFilters(ships: Ship[], filters: Filters): Ship[] {
     return ships;
   }
 
+  const searchTerms = getSearchTerms(filters.query);
+
   return ships.filter((ship) => {
     return (
       matches(filters.categories, ship.category) &&
       matches(filters.tiers, ship.tier) &&
       matches(filters.classes, ship.classKey) &&
-      matches(filters.nations, ship.nationKey)
+      matches(filters.nations, ship.nationKey) &&
+      matchesSearchTerms(searchTerms, ship.searchString)
     );
   });
 }
 
-export function hasActiveFilters(filters: Filters) {
-  return Object.values(filters).some((values) => values.length !== 0);
+export function hasActiveFilters(filters: Filters): boolean {
+  const { query, ...facetFilters } = filters;
+
+  return (
+    Object.values(facetFilters).some((values) => values.length !== 0) ||
+    getSearchTerms(query).length > 0
+  );
 }
 
 export function serializeFilters(filters: Filters): URLSearchParams {
@@ -75,6 +91,10 @@ export function serializeFilters(filters: Filters): URLSearchParams {
     params.append(filterUrlParams.nations, nation);
   }
 
+  if (getSearchTerms(filters.query).length > 0) {
+    params.append(filterUrlParams.query, filters.query.trim());
+  }
+
   return params;
 }
 
@@ -91,6 +111,7 @@ export function parseFilters(search: string): Filters {
   const rawTiers = params.getAll(filterUrlParams.tiers);
   const rawClasses = params.getAll(filterUrlParams.classes);
   const rawNations = params.getAll(filterUrlParams.nations);
+  const rawQuery = params.get(filterUrlParams.query)?.substring(0, 100) ?? '';
 
   const categories = rawCategories
     .filter((rawCategory) => isOneOf(shipCategories, rawCategory))
@@ -112,5 +133,6 @@ export function parseFilters(search: string): Filters {
     tiers: [...new Set(tiers)],
     classes: [...new Set(classes)],
     nations: [...new Set(nations)],
+    query: rawQuery,
   };
 }

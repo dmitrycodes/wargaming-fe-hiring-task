@@ -2,6 +2,7 @@ import { getMediaUrl } from '../../domain/media';
 import {
   deriveShipCategory,
   deriveShipClassKey,
+  deriveShipSearchString,
   deriveShipTier,
   isShipHidden,
 } from '../../domain/ship';
@@ -63,6 +64,10 @@ export function normalizeShips(
       fullNames: vehicle.localization.mark,
       shortNames: vehicle.localization.shortmark,
       imageUrl: getMediaUrl(vehicle.icons.contour, mediaPath),
+      searchString: deriveShipSearchString(
+        vehicle.localization.shortmark,
+        vehicle.localization.mark,
+      ),
     });
   }
 
